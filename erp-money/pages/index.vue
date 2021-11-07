@@ -1,48 +1,63 @@
 <template>
   <div class="container">
+    <b-navbar type="light" variant="light">
+      <b-navbar-brand tag="h1" class="mb-0">
+        Association
+      </b-navbar-brand>
+    </b-navbar>
     <div>
       <div class="userListLogo">
         <b-img src="../static/imageBde.PNG" fluid alt="/" />
-        <div class="userListContainer">
+        <div class="transactionListContainer">
           <h4>
-            Liste des membres
+            Historique des transactions
           </h4>
-          <b-table class="userList" :items="itemsUsers" :fields="fieldsUser" striped responsive>
-            <template #cell(access_profile)="row">
-              <b-button class="mr-2" size="sm" @click="row.toggleProfile">
-                Accéder au profil
-              </b-button>
-            </template>
-          </b-table>
+          <b-table class="list" striped hover responsive :items="items" />
         </div>
       </div>
       <div class="information">
         <p class="informationItem">
           Solde de l'association : {{ solde }} €
         </p>
-        <b-button class="informationItem" variant="success">
-          +
+        <b-button v-b-modal.modal-add-money class="informationItem" variant="success">
+          Ajouter de l'argent
         </b-button>
-        <b-button variant="danger">
-          -
+        <b-button v-b-modal.modal-remove-money variant="danger">
+          Retirer de l'argent
         </b-button>
       </div>
     </div>
-    <div>
-      <h4>Historique des transactions </h4>
-      <b-table striped hover :items="items" />
+    <div class="memberListContainer">
+      <h4>Liste des membres</h4>
+      <b-table class="list" :items="itemsUsers" :fields="fieldsUser" striped responsive>
+        <template #cell(access_profile)="row">
+          <b-button class="mr-2" size="sm" @click="row.toggleProfile">
+            Accéder au profil
+          </b-button>
+        </template>
+      </b-table>
     </div>
+    <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="modifyBalance($event)" />
+    <modify-balance-popup id="modal-remove-money" title="Retirer de l'argent" :negative="true" @save="modifyBalance($event)" />
   </div>
 </template>
 
 <script>
+import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
 export default {
   name: 'HomePage',
+  components: { modifyBalancePopup },
   data () {
     return {
-      solde: 14000,
+      solde: 14000.00,
       items: [
         { Montant: -40, type: 'Café', heure: '12h00' },
+        { Montant: -300, type: 'Frigo', heure: '15h00' },
+        { Montant: 400, type: 'Don', heure: '17h00' },
+        { Montant: 38, type: 'Don', heure: '09h30' },
+        { Montant: -300, type: 'Frigo', heure: '15h00' },
+        { Montant: 400, type: 'Don', heure: '17h00' },
+        { Montant: 38, type: 'Don', heure: '09h30' },
         { Montant: -300, type: 'Frigo', heure: '15h00' },
         { Montant: 400, type: 'Don', heure: '17h00' },
         { Montant: 38, type: 'Don', heure: '09h30' }
@@ -84,17 +99,18 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    modifyBalance (value) {
+      this.solde = Number(this.solde) + Number(value)
+    }
   }
 }
 </script>
 
 <style>
   .container {
-    margin: 35px;
-  }
-
-  .information {
-    display: flex;
+    width:100%;
   }
 
   .informationItem {
@@ -105,13 +121,17 @@ export default {
     display: flex;
   }
 
-  .userListContainer {
+  .transactionListContainer {
     margin-left: 90px;
     width: 100%;
     max-height: 250px;
   }
 
-  .userList {
+  .list {
     max-height: 250px;
+  }
+
+  .memberListContainer {
+    margin-top: 20px;
   }
 </style>
