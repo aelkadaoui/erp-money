@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <b-navbar type="light" variant="light">
-      <b-navbar-brand tag="h1" class="mb-0">
+      <b-navbar-brand to="/" tag="h1" class="mb-0">
         Association
       </b-navbar-brand>
     </b-navbar>
@@ -19,10 +19,10 @@
         <p class="informationItem">
           Solde de l'association : {{ solde }} €
         </p>
-        <b-button v-b-modal.modal-add-money class="informationItem" variant="success">
+        <b-button v-b-modal.modal-add-money pill class="informationItem" variant="success">
           Ajouter de l'argent
         </b-button>
-        <b-button v-b-modal.modal-remove-money variant="danger">
+        <b-button v-b-modal.modal-remove-money pill variant="danger">
           Retirer de l'argent
         </b-button>
       </div>
@@ -31,7 +31,7 @@
       <h4>Liste des membres</h4>
       <b-table class="list" :items="itemsUsers" :fields="fieldsUser" striped responsive>
         <template #cell(access_profile)="row">
-          <b-button class="mr-2" size="sm" @click="row.toggleProfile">
+          <b-button class="mr-2" size="sm" @click="openProfile(row)">
             Accéder au profil
           </b-button>
         </template>
@@ -64,45 +64,36 @@ export default {
       ],
       fieldsUser: ['first_name', 'last_name', 'access_profile'],
       itemsUsers: [
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+        { id: 1, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+        { id: 2, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
         {
+          id: 3,
           isActive: false,
           age: 89,
           first_name: 'Geneva',
           last_name: 'Wilson'
         },
-        { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' },
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+        { id: 4, isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' },
+        { id: 5, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+        { id: 6, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
         {
+          id: 7,
           isActive: false,
           age: 89,
           first_name: 'Geneva',
           last_name: 'Wilson'
         },
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        {
-          isActive: false,
-          age: 89,
-          first_name: 'Geneva',
-          last_name: 'Wilson'
-        },
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        {
-          isActive: false,
-          age: 89,
-          first_name: 'Geneva',
-          last_name: 'Wilson'
-        }
+        { id: 8, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+        { id: 9, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' }
       ]
     }
   },
   methods: {
     modifyBalance (value) {
       this.solde = Number(this.solde) + Number(value)
+    },
+    openProfile (user) {
+      this.$router.push('/user/' + user.item.id)
     }
   }
 }
