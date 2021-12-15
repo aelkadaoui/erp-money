@@ -22,7 +22,7 @@
           Ajouter de l'argent
         </b-button>
         <b-button v-b-modal.modal-remove-money pill variant="danger">
-          Retirer de l'argent
+         Payer
         </b-button>
       </div>
     </div>
@@ -40,7 +40,7 @@
     <modify-balance-popup
       id="modal-remove-money"
       :negative="true"
-      title="Retirer de l'argent"
+      title="Payer"
       @save="modifyBalance($event)"
     />
   </div>

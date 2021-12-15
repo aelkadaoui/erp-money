@@ -23,12 +23,12 @@
           Ajouter de l'argent
         </b-button>
         <b-button v-b-modal.modal-remove-money pill variant="danger">
-          Retirer de l'argent
+        Payer
         </b-button>
       </div>
     </div>
     <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="modifyBalance($event)" />
-    <modify-balance-popup id="modal-remove-money" title="Retirer de l'argent" :negative="true" @save="modifyBalance($event)" />
+    <modify-balance-popup id="modal-remove-money" title="Payer" :negative="true" @save="modifyBalance($event)" />
   </div>
 </template>
 
@@ -59,8 +59,8 @@ export default {
     this.$store.dispatch('transaction/getTransactions')
   },
   methods: {
-    modifyBalance (amount) {
-      this.$store.dispatch('user/updateBalanceUser', { id: this.$route.params.userId, solde: amount })
+    modifyBalance (amount, type, produit) {
+      this.$store.dispatch('user/updateBalanceUser', { id: this.$route.params.userId, solde: amount, typePaiement: type, produitId: produit.id })
     }
   }
 }

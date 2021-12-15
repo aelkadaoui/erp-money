@@ -22,12 +22,27 @@
           :state="amountState"
           required
         />
+        <div v-if="title === 'Payer'">
+          Type achat <br/>
+          <select class="form-select" v-model="selected">
+            <option v-for="(item) in typesPaiement" :key="item.id">
+              {{ item.type }}
+            </option>
+          </select>
+          Produit <br/>
+          <select class="form-select" v-model="selected">
+            <option v-for="(item) in products['products']" :key="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
       </b-form-group>
     </form>
   </b-modal>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'ModifyBalancePopup',
   props: {
@@ -44,10 +59,27 @@ export default {
       default: false
     }
   },
+  computed: {
+    ...mapState('product', [
+      'products'
+    ])
+  },
+  created () {
+    this.$store.dispatch('product/getProducts')
+  },
   data () {
     return {
       amount: null,
-      amountState: null
+      amountState: null,
+      typesPaiement: [
+        { id: 1, type: 'CB' },
+        { id: 2, type: 'Espece' }
+      ],
+      produits: [
+        { id: 1, nom: 'Produit 1' },
+        { id: 2, nom: 'Produit 2' }
+      ],
+      fieldProduct: ['name']
     }
   },
   methods: {
