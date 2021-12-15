@@ -2,7 +2,7 @@
   <div class="container">
     <b-navbar type="light" variant="light">
       <b-navbar-brand to="/" tag="h1" class="mb-0">
-        Association
+        membre: {{ user.lastname }} {{ user.firstname }}
       </b-navbar-brand>
     </b-navbar>
     <div>
@@ -12,12 +12,12 @@
           <h4>
             Historique des transactions
           </h4>
-          <b-table class="list" striped hover responsive :items="items" />
+          <b-table :fields="fieldsTransaction" :items="transactions['transactions']" class="list" responsive striped />
         </div>
       </div>
       <div class="information">
         <p class="informationItem">
-          Solde de l'utilisateur : {{ solde }} €
+          Solde de l'utilisateur : {{ user.balance }} €
         </p>
         <b-button v-b-modal.modal-add-money pill class="informationItem" variant="success">
           Ajouter de l'argent
@@ -33,35 +33,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
 export default {
   name: 'HomePage',
   components: { modifyBalancePopup },
   data () {
     return {
-      solde: 14000.00,
-      items: [
-        { Montant: -40, type: 'Café', heure: '12h00' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' }
-      ],
-      user: { id: 1, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' }
+      fieldsTransaction: ['value', 'name', 'createdAt']
     }
   },
   computed: {
     id () {
       return this.$route.params.userId
-    }
+    },
+    ...mapState('user', [
+      'user'
+    ]),
+    ...mapState('transaction', [
+      'transactions'
+    ])
+  },
+  created () {
+    this.$store.dispatch('user/getUser', this.$route.params.userId)
+    this.$store.dispatch('transaction/getTransactions')
   },
   methods: {
     modifyBalance (amount) {
+      this.$store.dispatch('user/updateBalanceUser', { id: this.$route.params.userId, solde: amount })
     }
   }
 }

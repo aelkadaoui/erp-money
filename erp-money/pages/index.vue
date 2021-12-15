@@ -2,7 +2,6 @@
   <div class="container">
     <b-navbar type="light" variant="light">
       <b-navbar-brand class="mb-0" tag="h1" to="/">
-        Association
       </b-navbar-brand>
     </b-navbar>
     <div>
@@ -12,7 +11,7 @@
           <h4>
             Historique des transactions
           </h4>
-          <b-table :items="items" class="list" hover responsive striped />
+          <b-table :fields="fieldsTransaction" :items="transactions['transactions']" class="list" responsive striped />
         </div>
       </div>
       <div class="information">
@@ -56,29 +55,21 @@ export default {
   data () {
     return {
       solde: 14000.00,
-      items: [
-        { Montant: -40, type: 'Café', heure: '12h00' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' },
-        { Montant: -300, type: 'Frigo', heure: '15h00' },
-        { Montant: 400, type: 'Don', heure: '17h00' },
-        { Montant: 38, type: 'Don', heure: '09h30' }
-      ],
-      fieldsUser: ['firstname', 'lastname', 'access_profile'],
-      itemsUser: []
+      fieldsTransaction: ['value', 'name', 'createdAt'],
+      fieldsUser: ['firstname', 'lastname', 'access_profile']
     }
   },
   computed: {
     ...mapState('user', [
       'users'
+    ]),
+    ...mapState('transaction', [
+      'transactions'
     ])
   },
   created () {
     this.$store.dispatch('user/getUsers')
+    this.$store.dispatch('transaction/getTransactions')
   },
 
   methods: {
