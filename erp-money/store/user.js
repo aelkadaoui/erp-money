@@ -26,7 +26,7 @@ export const actions = {
     commit('setUser', user)
   },
   updateBalanceUser ({ commit }, payload) {
-    return this.$axios.$put(`https://cnamus-student-back.herokuapp.com/api/v1/money/Add/${payload.id}/${payload.solde}`, config)
+    return this.$axios.$post(`https://backend-erp-money.herokuapp.com/api/paiement/${payload.id}/${payload.solde}`, config)
   }
 }
 
