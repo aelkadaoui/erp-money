@@ -1,25 +1,26 @@
 <template>
   <div class="container">
     <b-navbar type="light" variant="light">
-      <b-navbar-brand to="/" tag="h1" class="mb-0">
+      <b-navbar-brand class="mb-0" tag="h1" to="/">
         Association
       </b-navbar-brand>
+      User : {{ users }}
     </b-navbar>
     <div>
       <div class="userListLogo">
-        <b-img src="../static/imageBde.PNG" fluid alt="/" />
+        <b-img alt="/" fluid src="../static/imageBde.PNG" />
         <div class="transactionListContainer">
           <h4>
             Historique des transactions
           </h4>
-          <b-table class="list" striped hover responsive :items="items" />
+          <b-table :items="items" class="list" hover responsive striped />
         </div>
       </div>
       <div class="information">
         <p class="informationItem">
           Solde de l'association : {{ solde }} €
         </p>
-        <b-button v-b-modal.modal-add-money pill class="informationItem" variant="success">
+        <b-button v-b-modal.modal-add-money class="informationItem" pill variant="success">
           Ajouter de l'argent
         </b-button>
         <b-button v-b-modal.modal-remove-money pill variant="danger">
@@ -29,7 +30,7 @@
     </div>
     <div class="memberListContainer">
       <h4>Liste des membres</h4>
-      <b-table class="list" :items="itemsUsers" :fields="fieldsUser" striped responsive>
+      <b-table :fields="fieldsUser" :items="itemsUser" class="list" responsive striped>
         <template #cell(access_profile)="row">
           <b-button class="mr-2" size="sm" @click="openProfile(row)">
             Accéder au profil
@@ -38,7 +39,12 @@
       </b-table>
     </div>
     <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="modifyBalance($event)" />
-    <modify-balance-popup id="modal-remove-money" title="Retirer de l'argent" :negative="true" @save="modifyBalance($event)" />
+    <modify-balance-popup
+      id="modal-remove-money"
+      :negative="true"
+      title="Retirer de l'argent"
+      @save="modifyBalance($event)"
+    />
   </div>
 </template>
 
@@ -62,30 +68,16 @@ export default {
         { Montant: 400, type: 'Don', heure: '17h00' },
         { Montant: 38, type: 'Don', heure: '09h30' }
       ],
-      fieldsUser: ['first_name', 'last_name', 'access_profile'],
-      itemsUsers: [
-        { id: 1, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { id: 2, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        {
-          id: 3,
-          isActive: false,
-          age: 89,
-          first_name: 'Geneva',
-          last_name: 'Wilson'
-        },
-        { id: 4, isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' },
-        { id: 5, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { id: 6, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        {
-          id: 7,
-          isActive: false,
-          age: 89,
-          first_name: 'Geneva',
-          last_name: 'Wilson'
-        },
-        { id: 8, isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { id: 9, isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' }
-      ]
+      fieldsUser: ['firstname', 'lastname', 'access_profile'],
+      itemsUser: []
+    }
+  },
+  created () {
+    this.$store.dispatch('user/getUsers')
+  },
+  asyncComputed: {
+    async users () {
+      return await this.$store.getters['user/users']
     }
   },
   methods: {
@@ -100,29 +92,29 @@ export default {
 </script>
 
 <style>
-  .container {
-    width:100%;
-  }
+.container {
+  width: 100%;
+}
 
-  .informationItem {
-    margin-right: 4px;
-  }
+.informationItem {
+  margin-right: 4px;
+}
 
-  .userListLogo {
-    display: flex;
-  }
+.userListLogo {
+  display: flex;
+}
 
-  .transactionListContainer {
-    margin-left: 90px;
-    width: 100%;
-    max-height: 250px;
-  }
+.transactionListContainer {
+  margin-left: 90px;
+  width: 100%;
+  max-height: 250px;
+}
 
-  .list {
-    max-height: 250px;
-  }
+.list {
+  max-height: 250px;
+}
 
-  .memberListContainer {
-    margin-top: 20px;
-  }
+.memberListContainer {
+  margin-top: 20px;
+}
 </style>
