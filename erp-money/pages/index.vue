@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <b-navbar type="light" variant="light">
-      <b-navbar-brand class="mb-0" tag="h1" to="/">
-      </b-navbar-brand>
+      <b-navbar-brand class="mb-0" tag="h1" to="/" />
     </b-navbar>
     <div>
       <div class="userListLogo">
@@ -11,7 +10,7 @@
           <h4>
             Historique des transactions
           </h4>
-          <b-table :fields="fieldsTransaction" :items="transactions['transactions']" class="list" responsive striped />
+          <b-table :fields="fieldsTransaction" :items="transactions" class="list" responsive striped />
         </div>
       </div>
       <div class="information">
@@ -22,7 +21,7 @@
           Ajouter de l'argent
         </b-button>
         <b-button v-b-modal.modal-remove-money pill variant="danger">
-         Payer
+          Payer
         </b-button>
       </div>
     </div>

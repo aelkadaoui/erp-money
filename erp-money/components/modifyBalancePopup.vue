@@ -22,15 +22,15 @@
           :state="amountState"
           required
         />
+        Type paiement <br>
+        <select v-model="type" class="form-select">
+          <option v-for="(item) in typesPaiement" :key="item.id">
+            {{ item.type }}
+          </option>
+        </select>
         <div v-if="title === 'Payer'">
-          Type achat <br/>
-          <select class="form-select" v-model="selected">
-            <option v-for="(item) in typesPaiement" :key="item.id">
-              {{ item.type }}
-            </option>
-          </select>
-          Produit <br/>
-          <select class="form-select" v-model="selected">
+          Produit <br>
+          <select v-model="produit" class="form-select">
             <option v-for="(item) in products['products']" :key="item.id">
               {{ item.name }}
             </option>
@@ -59,14 +59,6 @@ export default {
       default: false
     }
   },
-  computed: {
-    ...mapState('product', [
-      'products'
-    ])
-  },
-  created () {
-    this.$store.dispatch('product/getProducts')
-  },
   data () {
     return {
       amount: null,
@@ -75,12 +67,16 @@ export default {
         { id: 1, type: 'CB' },
         { id: 2, type: 'Espece' }
       ],
-      produits: [
-        { id: 1, nom: 'Produit 1' },
-        { id: 2, nom: 'Produit 2' }
-      ],
-      fieldProduct: ['name']
+      fieldProduct: ['id', 'name']
     }
+  },
+  computed: {
+    ...mapState('product', [
+      'products'
+    ])
+  },
+  created () {
+    this.$store.dispatch('product/getProducts')
   },
   methods: {
     checkFormValidity () {

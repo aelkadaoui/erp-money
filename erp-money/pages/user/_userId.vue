@@ -12,7 +12,7 @@
           <h4>
             Historique des transactions
           </h4>
-          <b-table :fields="fieldsTransaction" :items="transactions['transactions']" class="list" responsive striped />
+          <b-table :fields="fieldsTransaction" :items="transactionsByUser" class="list" responsive striped />
         </div>
       </div>
       <div class="information">
@@ -23,7 +23,7 @@
           Ajouter de l'argent
         </b-button>
         <b-button v-b-modal.modal-remove-money pill variant="danger">
-        Payer
+          Payer
         </b-button>
       </div>
     </div>
@@ -51,12 +51,12 @@ export default {
       'user'
     ]),
     ...mapState('transaction', [
-      'transactions'
+      'transactionsByUser'
     ])
   },
   created () {
     this.$store.dispatch('user/getUser', this.$route.params.userId)
-    this.$store.dispatch('transaction/getTransactions')
+    this.$store.dispatch('transaction/getTransactionsByUser', this.$route.params.userId)
   },
   methods: {
     modifyBalance (amount, type, produit) {

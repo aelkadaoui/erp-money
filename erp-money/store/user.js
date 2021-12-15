@@ -25,6 +25,9 @@ export const actions = {
     const user = await this.$axios.$get(`https://cnamus-student-back.herokuapp.com/api/v1/student/Get/${id}`, config)
     commit('setUser', user)
   },
+  async returnUser ({ commit }, id) {
+    return await this.$axios.$get(`https://cnamus-student-back.herokuapp.com/api/v1/student/Get/${id}`, config)
+  },
   updateBalanceUser ({ commit }, payload) {
     return this.$axios.$post(`https://backend-erp-money.herokuapp.com/api/paiement/${payload.id}/${payload.productId}/${payload.solde}${payload.typePayment}`, config)
   }
