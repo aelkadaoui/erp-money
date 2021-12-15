@@ -13,8 +13,8 @@ export const mutations = {
 }
 
 export const actions = {
-  getUsers ({ commit }) {
-    const users = this.$axios.$get('https://cnamus-student-back.herokuapp.com/api/v1/student/GetAll', config)
+  async getUsers ({ commit }) {
+    const users = await this.$axios.$get('https://cnamus-student-back.herokuapp.com/api/v1/student/GetAll', config)
     commit('setUsers', users)
   }
 }

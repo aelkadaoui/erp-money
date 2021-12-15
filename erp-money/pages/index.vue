@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
 export default {
   name: 'HomePage',
@@ -72,14 +73,15 @@ export default {
       itemsUser: []
     }
   },
+  computed: {
+    ...mapState('user', [
+      'users'
+    ])
+  },
   created () {
     this.$store.dispatch('user/getUsers')
   },
-  asyncComputed: {
-    async users () {
-      return await this.$store.getters['user/users']
-    }
-  },
+
   methods: {
     modifyBalance (value) {
       this.solde = Number(this.solde) + Number(value)
