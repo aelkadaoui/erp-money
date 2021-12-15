@@ -4,7 +4,6 @@
       <b-navbar-brand class="mb-0" tag="h1" to="/">
         Association
       </b-navbar-brand>
-      User : {{ users }}
     </b-navbar>
     <div>
       <div class="userListLogo">
@@ -30,7 +29,7 @@
     </div>
     <div class="memberListContainer">
       <h4>Liste des membres</h4>
-      <b-table :fields="fieldsUser" :items="itemsUser" class="list" responsive striped>
+      <b-table :fields="fieldsUser" :items="users" class="list" responsive striped>
         <template #cell(access_profile)="row">
           <b-button class="mr-2" size="sm" @click="openProfile(row)">
             Accéder au profil
