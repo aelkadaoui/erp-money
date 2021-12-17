@@ -18,18 +18,18 @@ export const mutations = {
 
 export const actions = {
   async getUsers ({ commit }) {
-    const users = await this.$axios.$get('https://cnamus-student-back.herokuapp.com/api/v1/student/GetAll', config)
+    const users = await this.$axios.$get(process.env.MONEY_API + '/api/v1/student/GetAll', config)
     commit('setUsers', users)
   },
   async getUser ({ commit }, id) {
-    const user = await this.$axios.$get(`https://cnamus-student-back.herokuapp.com/api/v1/student/Get/${id}`, config)
+    const user = await this.$axios.$get(process.env.MONEY_API + `/api/v1/student/Get/${id}`, config)
     commit('setUser', user)
   },
   async returnUser ({ commit }, id) {
-    return await this.$axios.$get(`https://cnamus-student-back.herokuapp.com/api/v1/student/Get/${id}`, config)
+    return await this.$axios.$get(process.env.MONEY_API + `/api/v1/student/Get/${id}`, config)
   },
   updateBalanceUser ({ commit }, payload) {
-    return this.$axios.$post(`https://backend-erp-money.herokuapp.com/api/paiement/${payload.id}/${payload.productId}/${payload.solde}${payload.typePayment}`, config)
+    return this.$axios.$post(process.env.MONEY_API + `/api/paiement/${payload.id}/${payload.productId}/${payload.solde}${payload.typePayment}`, config)
   }
 }
 

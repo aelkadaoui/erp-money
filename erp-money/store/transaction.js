@@ -19,13 +19,13 @@ export const mutations = {
 
 export const actions = {
   async getTransactions ({ commit }) {
-    const transactions = await this.$axios.$get('https://erp-back-api.jonathanj.fr/accounting_transactions', config)
+    const transactions = await this.$axios.$get(process.env.COMPTA_API + '/accounting_transactions', config)
     // eslint-disable-next-line no-return-assign
     transactions.transactions.map(transa => transa.createdAt = moment(transa.createdAt).locale('fr').format('LLLL'))
     commit('setTransactions', transactions.transactions)
   },
   async getTransactionsByUser ({ commit, dispatch }, idUser) {
-    const transactions = await this.$axios.$get('https://erp-back-api.jonathanj.fr/accounting_transactions', config)
+    const transactions = await this.$axios.$get(process.env.COMPTA_API + '/accounting_transactions', config)
     const user = await dispatch('user/returnUser', idUser, { root: true })
     // eslint-disable-next-line no-return-assign
     transactions.transactions.map(transa => transa.createdAt = moment(transa.createdAt).locale('fr').format('LLLL'))
