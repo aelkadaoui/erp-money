@@ -14,7 +14,7 @@ export const mutations = {
 
 export const actions = {
   async getProducts ({ commit }) {
-    const products = await this.$axios.$get('https://erp-back-api.jonathanj.fr/products', config)
+    const products = await this.$axios.$get(process.env.COMPTA_API + '/products', config)
     commit('setProducts', products)
   }
 }
