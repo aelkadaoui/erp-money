@@ -22,6 +22,12 @@ export default {
     ]
   },
 
+  env: {
+    STUDENT_API: 'https://cnamus-student-back.herokuapp.com',
+    MONEY_API: 'https://backend-erp-money.herokuapp.com',
+    COMPTA_API: 'https://erp-back-api.jonathanj.fr'
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
