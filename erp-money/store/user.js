@@ -18,17 +18,18 @@ export const mutations = {
 
 export const actions = {
   async getUsers ({ commit }) {
-    const users = await this.$axios.$get(process.env.MONEY_API + '/api/v1/student/GetAll', config)
+    const users = await this.$axios.$get(process.env.STUDENT_API + '/api/v1/student/GetAll', config)
     commit('setUsers', users)
   },
   async getUser ({ commit }, id) {
-    const user = await this.$axios.$get(process.env.MONEY_API + `/api/v1/student/Get/${id}`, config)
+    const user = await this.$axios.$get(process.env.STUDENT_API + `/api/v1/student/Get/${id}`, config)
     commit('setUser', user)
   },
   async returnUser ({ commit }, id) {
-    return await this.$axios.$get(process.env.MONEY_API + `/api/v1/student/Get/${id}`, config)
+    return await this.$axios.$get(process.env.STUDENT_API + `/api/v1/student/Get/${id}`, config)
   },
   updateBalanceUser ({ commit }, payload) {
+    console.log(payload)
     return this.$axios.$post(process.env.MONEY_API + `/api/paiement/${payload.id}/${payload.productId}/${payload.solde}${payload.typePayment}`, config)
   }
 }
