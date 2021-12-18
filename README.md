@@ -1,91 +1,89 @@
-# Frontend
+# erp-money
 
-Projet frontend pour le module MONEY de l'ERP d'association étudiante du CNAM.
+## Build Setup
 
-## Getting started
+```bash
+# install dependencies
+$ npm install
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+# serve with hot reload at localhost:3000
+$ npm run dev
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+# build for production and launch server
+$ npm run build
+$ npm run start
 
-## Add your files
-
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/cnam_erp_money/frontend.git
-git branch -M main
-git push -uf origin main
+# generate static project
+$ npm run generate
 ```
 
-## Integrate with your tools
+## Intégration Docker
 
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/integrations/)
+Installer préalablement [Docker Desktop](https://www.docker.com/products/docker-desktop), il existe aussi une version Mac. L'application permet d'installer le Docker Engine, ce qui va permettre l'utilisation des commandes docker dans un bash. En plus d'une interface graphique permettant de voir facilement les images
+présentes en local et gérer les containeurs qui tournent sur le poste.
 
-## Collaborate with your team
+**Attention !** Pour lancer la commande `docker build`, il faut être placer dans le même dossier que le fichier Dockerfile (frontend/erp-money/).
+Si vous avez effectué des changements dans le code et que vous voulez le tester dans docker, il faut recréer à nouveau l'image (`docker build ...`).
 
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+```bash
+# Création de l'image Docker
+$ docker build . -t nawa/cnam-erpmoney-frontend
 
-## Test and Deploy
+# Lancement de l'image, ce qui va créer un container, l'application est disponible sur http://localhost:3001/
+$ docker run -p 3001:3000 -d --name front_cnam_erpmoney_app nawa/cnam-erpmoney-frontend
 
-Use the built-in continuous integration in GitLab.
+# Pour stopper le container
+$ docker stop front_cnam_erpmoney_app
 
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://docs.gitlab.com/ee/user/clusters/agent/)
+# Pour lancer le container
+$ docker start front_cnam_erpmoney_app
+```
 
-***
+## Special Directories
 
-# Editing this README
+You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:459258d907e9c60c8e39fe67f8e4aadf?https://www.makeareadme.com/) for this template.
+### `assets`
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
 
-## Name
-Choose a self-explaining name for your project.
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### `components`
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### `layouts`
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### `pages`
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### `plugins`
 
-## License
-For open source projects, say how it is licensed.
+The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
 
+### `static`
+
+This directory contains your static files. Each file inside this directory is mapped to `/`.
+
+Example: `/static/robots.txt` is mapped as `/robots.txt`.
+
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
+
+### `store`
+
+This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
+
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
