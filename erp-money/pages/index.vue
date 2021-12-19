@@ -54,8 +54,46 @@ export default {
   data () {
     return {
       solde: 14000.00,
-      fieldsTransaction: ['value', 'name', 'createdAt'],
-      fieldsUser: ['firstname', 'lastname', 'access_profile']
+      fieldsTransaction: [
+        {
+          key: 'name',
+          label: 'Intitulé'
+        },
+        {
+          key: 'description',
+          label: 'Description'
+        },
+        {
+          key: 'createdAt',
+          label: 'Date'
+        },
+        {
+          key: 'value',
+          label: 'Montant (€)'
+        }
+      ],
+      fieldsUser: [
+        {
+          key: 'firstname',
+          label: 'Prénom'
+        },
+        {
+          key: 'lastname',
+          label: 'Nom'
+        },
+        {
+          key: 'email',
+          label: 'E-mail'
+        },
+        {
+          key: 'balance',
+          label: 'Balance (€)'
+        },
+        {
+          key: 'access_profile',
+          label: ''
+        }
+      ]
     }
   },
   computed: {

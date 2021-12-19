@@ -1,11 +1,14 @@
 <template>
   <div class="container">
     <b-navbar type="light" variant="light">
-      <b-navbar-brand to="/" tag="h1" class="mb-0">
-        membre: {{ user.lastname }} {{ user.firstname }}
-      </b-navbar-brand>
+      <b-link to="/">
+        <b-icon icon="arrow-left" />
+      </b-link>
     </b-navbar>
     <div>
+      <div>
+        Membre : {{ user.lastname }} {{ user.firstname }}
+      </div>
       <div class="userListLogo">
         <b-img class="avatar" src="../../static/logoUser.jpg" fluid alt="/" />
         <div class="transactionListContainer">
@@ -34,13 +37,36 @@
 
 <script>
 import { mapState } from 'vuex'
+import { BIcon, BIconArrowLeft } from 'bootstrap-vue'
 import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
 export default {
   name: 'HomePage',
-  components: { modifyBalancePopup },
+  components: {
+    modifyBalancePopup,
+    BIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    BIconArrowLeft
+  },
   data () {
     return {
-      fieldsTransaction: ['value', 'name', 'createdAt']
+      fieldsTransaction: [
+        {
+          key: 'name',
+          label: 'Intitulé'
+        },
+        {
+          key: 'description',
+          label: 'Description'
+        },
+        {
+          key: 'createdAt',
+          label: 'Date'
+        },
+        {
+          key: 'value',
+          label: 'Montant (€)'
+        }
+      ]
     }
   },
   computed: {

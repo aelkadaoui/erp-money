@@ -3,6 +3,7 @@
     :id="id"
     ref="modal"
     :title="title"
+    :ok-disabled="enableOk"
     @show="resetModal"
     @hidden="resetModal"
     @ok="handleOk"
@@ -23,14 +24,14 @@
           required
         />
         Type paiement <br>
-        <select v-model="type" class="form-select">
+        <select v-model="type" class="form-select" required>
           <option v-for="(item) in typesPaiement" :key="item.id">
             {{ item.type }}
           </option>
         </select>
         <div v-if="title === 'Payer'">
           Produit <br>
-          <select v-model="produit" class="form-select">
+          <select v-model="produit" class="form-select" required>
             <option v-for="(item) in products['products']" :key="item.id">
               {{ item.name }}
             </option>
@@ -67,13 +68,22 @@ export default {
         { id: 1, type: 'CB' },
         { id: 2, type: 'Espece' }
       ],
-      fieldProduct: ['id', 'name']
+      fieldProduct: ['id', 'name'],
+      type: null,
+      produit: null
     }
   },
   computed: {
     ...mapState('product', [
       'products'
-    ])
+    ]),
+    enableOk () {
+      if (this.title === 'Payer') {
+        return !(this.type !== null && this.produit !== null && this.amount !== null)
+      } else {
+        return !(this.type !== null && this.amount !== null && this.amount !== '')
+      }
+    }
   },
   created () {
     this.$store.dispatch('product/getProducts')
