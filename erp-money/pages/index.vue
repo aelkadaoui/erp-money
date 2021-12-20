@@ -13,17 +13,6 @@
           <b-table :fields="fieldsTransaction" :items="transactions" class="list" responsive striped />
         </div>
       </div>
-      <div class="information">
-        <p class="informationItem">
-          Solde de l'association : {{ solde }} €
-        </p>
-        <b-button v-b-modal.modal-add-money class="informationItem" pill variant="success">
-          Ajouter de l'argent
-        </b-button>
-        <b-button v-b-modal.modal-remove-money pill variant="danger">
-          Payer
-        </b-button>
-      </div>
     </div>
     <div class="memberListContainer">
       <h4>Liste des membres</h4>

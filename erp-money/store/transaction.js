@@ -25,19 +25,22 @@ export const actions = {
     commit('setTransactions', transactions.transactions)
   },
   async getTransactionsByUser ({ commit, dispatch }, idUser) {
-    const transactions = await this.$axios.$get(process.env.COMPTA_API + '/accounting_transactions', config)
-    const user = await dispatch('user/returnUser', idUser, { root: true })
-    // eslint-disable-next-line no-return-assign
-    transactions.transactions.map(transa => transa.createdAt = moment(transa.createdAt).locale('fr').format('LLLL'))
-    commit('setTransactionsByUser', transactions.transactions.filter(transaction => transaction.account === user.lastname))
+    const transactions = await this.$axios.$get(process.env.MONEY_API + '/api/transactions/' + idUser, config)
+    const filteredArray = transactions.data.map((item) => {
+      return {
+        name: item.products[0].name,
+        quantity: item.products[0].quantity,
+        payment_type: item.payment_type === 'card' ? 'Carte de crédit' : item.payment_type === 'cash' ? 'Espèce' : 'Solde',
+        date: moment(item.date).locale('fr').format('LLLL'),
+        price: item.price
+      }
+    })
+    commit('setTransactionsByUser', filteredArray)
   }
 }
 
 export const getters = {
   transactions (state) {
     return state.transactions
-  },
-  transactionsByUser: state => (username) => {
-    return state.transactions.find(transaction => transaction.account === username)
   }
 }

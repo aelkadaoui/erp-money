@@ -8,14 +8,16 @@
     @hidden="resetModal"
     @ok="handleOk"
   >
-    <form ref="form" @submit.stop.prevent="handleSubmit">
+    <form ref="form">
       <b-form-group
-        label="Amount"
+        v-if="title !== 'Payer'"
+        label="Montant"
         label-for="amount-input"
         invalid-feedback="Amount is required"
         :state="amountState"
       >
         <b-form-input
+          v-if="title !== 'Payer'"
           id="amount-input"
           v-model="amount"
           type="number"
@@ -23,21 +25,26 @@
           :state="amountState"
           required
         />
-        Type paiement <br>
-        <select v-model="type" class="form-select" required>
-          <option v-for="(item) in typesPaiement" :key="item.id">
-            {{ item.type }}
+      </b-form-group>
+      Type paiement <br>
+      <select v-if="title === 'Payer'" v-model="type" class="form-select" required>
+        <option v-for="(item) in typesPaiement" :key="item.id">
+          {{ item.label }}
+        </option>
+      </select>
+      <select v-else v-model="type" class="form-select" required>
+        <option v-for="(item) in typesPaiementAddBalance" :key="item.id">
+          {{ item.label }}
+        </option>
+      </select>
+      <div v-if="title === 'Payer'">
+        Produit <br>
+        <select v-model="produit" class="form-select" required>
+          <option v-for="(item) in products['products']" :key="item.id">
+            {{ item.name }}
           </option>
         </select>
-        <div v-if="title === 'Payer'">
-          Produit <br>
-          <select v-model="produit" class="form-select" required>
-            <option v-for="(item) in products['products']" :key="item.id">
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
-      </b-form-group>
+      </div>
     </form>
   </b-modal>
 </template>
@@ -64,9 +71,14 @@ export default {
     return {
       amount: null,
       amountState: null,
+      typesPaiementAddBalance: [
+        { id: 1, type: 'card', label: 'Carte de crédit' },
+        { id: 2, type: 'cash', label: 'Espèce' }
+      ],
       typesPaiement: [
-        { id: 1, type: 'CB' },
-        { id: 2, type: 'Espece' }
+        { id: 1, type: 'card', label: 'Carte de crédit' },
+        { id: 2, type: 'cash', label: 'Espèce' },
+        { id: 3, type: 'member', label: 'Solde' }
       ],
       fieldProduct: ['id', 'name'],
       type: null,
@@ -79,7 +91,7 @@ export default {
     ]),
     enableOk () {
       if (this.title === 'Payer') {
-        return !(this.type !== null && this.produit !== null && this.amount !== null)
+        return !(this.type !== null && this.produit !== null)
       } else {
         return !(this.type !== null && this.amount !== null && this.amount !== '')
       }
@@ -106,8 +118,27 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      const value = 10 // appelez api pour remplacer le 10 avec this.amount si negative = false ou avec this.amount * -1 si negative = true
-      this.$emit('save', value)
+      if (this.title === 'Payer') {
+        const transac = {
+          payment: {
+            type: this.typesPaiement.find(item => item.label === this.type).type
+          },
+          products: [{
+            id: this.products.products.find(item => item.name === this.produit).id,
+            quantity: 1
+          }]
+        }
+        this.$emit('save', transac)
+      } else {
+        const newAmount = {
+          amount: this.amount
+        }
+        this.$emit('save', newAmount)
+      }
+      this.type = null
+      this.produit = null
+      this.amount = null
+      this.amountState = null
       this.$nextTick(() => {
         this.$bvModal.hide(this.id)
       })

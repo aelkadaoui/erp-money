@@ -30,7 +30,7 @@
         </b-button>
       </div>
     </div>
-    <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="modifyBalance($event)" />
+    <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="addAmount($event)" />
     <modify-balance-popup id="modal-remove-money" title="Payer" :negative="true" @save="modifyBalance($event)" />
   </div>
 </template>
@@ -55,15 +55,19 @@ export default {
           label: 'Intitulé'
         },
         {
-          key: 'description',
-          label: 'Description'
+          key: 'payment_type',
+          label: 'Type de paiement'
         },
         {
-          key: 'createdAt',
+          key: 'quantity',
+          label: 'Quantité'
+        },
+        {
+          key: 'date',
           label: 'Date'
         },
         {
-          key: 'value',
+          key: 'price',
           label: 'Montant (€)'
         }
       ]
@@ -85,8 +89,22 @@ export default {
     this.$store.dispatch('transaction/getTransactionsByUser', this.$route.params.userId)
   },
   methods: {
-    modifyBalance (amount, type, produit) {
-      this.$store.dispatch('user/updateBalanceUser', { id: this.$route.params.userId, solde: amount, typePaiement: type, produitId: produit.id })
+    async modifyBalance (transac) {
+      await this.$store.dispatch('user/pay', {
+        user_id: this.$route.params.userId,
+        products: transac.products,
+        payment: transac.payment
+      })
+      this.$store.dispatch('user/getUser', this.$route.params.userId)
+      this.$store.dispatch('transaction/getTransactionsByUser', this.$route.params.userId)
+    },
+    async addAmount (newAmount) {
+      await this.$store.dispatch('user/updateBalanceUser', {
+        user_id: this.$route.params.userId,
+        amount: newAmount.amount
+      })
+      this.$store.dispatch('user/getUser', this.$route.params.userId)
+      this.$store.dispatch('transaction/getTransactionsByUser', this.$route.params.userId)
     }
   }
 }
