@@ -5,8 +5,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
-
 RUN npm i --save moment
+RUN npm install --only=dev
 
 COPY . .
 
