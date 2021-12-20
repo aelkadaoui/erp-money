@@ -1,33 +1,39 @@
 <template>
   <div class="container">
-    <b-navbar type="light" variant="light">
-      <b-link to="/">
-        <b-icon icon="arrow-left" />
-      </b-link>
-    </b-navbar>
+    <b-link to="/">
+      <b-icon icon="arrow-left" />
+    </b-link><span>   Retour</span>
+    <NavBar>
+    </NavBar><br><br><br>
     <div>
       <div>
-        Membre : {{ user.lastname }} {{ user.firstname }}
+        {{ user.lastname }} {{ user.firstname }}
       </div>
-      <div class="userListLogo">
-        <b-img class="avatar" src="../../static/logoUser.jpg" fluid alt="/" />
-        <div class="transactionListContainer">
-          <h4>
-            Historique des transactions
-          </h4>
-          <b-table :fields="fieldsTransaction" :items="transactionsByUser" class="list" responsive striped />
+      <div class="row">
+        <div class="col-2">
+          <b-img class="img-fluid" src="../../static/logoUser.jpg" fluid alt="/" />
+          <div class="information">
+            <p class="informationItem">
+              Solde de l'utilisateur : {{ user.balance }} €
+            </p>
+            <b-button class="mb-2" v-b-modal.modal-add-money block variant="primary">
+              <span class="text-white">Ajouter de l'argent</span>
+            </b-button>
+            <b-button v-b-modal.modal-remove-money block variant="success">
+              <span class="text-white">Acheter un produit</span>
+            </b-button>
+          </div>
         </div>
-      </div>
-      <div class="information">
-        <p class="informationItem">
-          Solde de l'utilisateur : {{ user.balance }} €
-        </p>
-        <b-button v-b-modal.modal-add-money pill class="informationItem" variant="success">
-          Ajouter de l'argent
-        </b-button>
-        <b-button v-b-modal.modal-remove-money pill variant="danger">
-          Payer
-        </b-button>
+        <div class="transactions col-10">
+          <div v-if="!transactionsByUser.length" > Pas encore de transaction !</div>
+          <div v-else>
+            <div></div>
+            <h4>
+              Historique des transactions
+            </h4>
+            <b-table :fields="fieldsTransaction" :items="transactionsByUser" class="list" responsive striped />
+          </div>
+        </div>
       </div>
     </div>
     <modify-balance-popup id="modal-add-money" title="Ajouter de l'argent" @save="addAmount($event)" />
@@ -39,11 +45,13 @@
 import { mapState } from 'vuex'
 import { BIcon, BIconArrowLeft } from 'bootstrap-vue'
 import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
+import NavBar from '~/pages/navbar.vue'
 export default {
   name: 'HomePage',
   components: {
     modifyBalancePopup,
     BIcon,
+    NavBar,
     // eslint-disable-next-line vue/no-unused-components
     BIconArrowLeft
   },
@@ -114,19 +122,8 @@ export default {
  .container {
     width:100%;
   }
-
-  .informationItem {
-    margin-right: 4px;
-  }
-
   .userListLogo {
     display: flex;
-  }
-
-  .transactionListContainer {
-    margin-left: 90px;
-    width: 100%;
-    max-height: 250px;
   }
 
   .list {

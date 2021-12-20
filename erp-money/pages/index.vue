@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <b-navbar type="light" variant="light">
-      <b-navbar-brand class="mb-0" tag="h1" to="/" />
-    </b-navbar>
+    <NavBar></NavBar><br><br><br>
     <div>
       <div class="userListLogo">
         <b-img alt="/" fluid src="../static/imageBde.PNG" />
@@ -18,8 +16,8 @@
       <h4>Liste des membres</h4>
       <b-table :fields="fieldsUser" :items="users" class="list" responsive striped>
         <template #cell(access_profile)="row">
-          <b-button class="mr-2" size="sm" @click="openProfile(row)">
-            Accéder au profil
+          <b-button class="mr-2" size="sm" @click="openProfile(row)" variant="primary">
+            <span class="text-white">Accéder au profil</span>
           </b-button>
         </template>
       </b-table>
@@ -37,9 +35,10 @@
 <script>
 import { mapState } from 'vuex'
 import modifyBalancePopup from '~/components/modifyBalancePopup.vue'
+import NavBar from '~/pages/navbar.vue'
 export default {
   name: 'HomePage',
-  components: { modifyBalancePopup },
+  components: { modifyBalancePopup, NavBar },
   data () {
     return {
       solde: 14000.00,
