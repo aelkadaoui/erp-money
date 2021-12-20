@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f4300f9-acbd-4a25-8a73-f4cad38985b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/erp-money/pages/navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp-money/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/erp-money/nuxt.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp-money/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/erp-money/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erp-money/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/erp-money/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp-money/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/erp-money/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erp-money/pages/user/_userId.vue" beforeDir="false" afterPath="$PROJECT_DIR$/erp-money/pages/user/_userId.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
