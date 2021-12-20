@@ -8,6 +8,7 @@ before_script:
 
 stages:
     - build_and_push_image
+    - production
 
 build_and_push_image:
     stage: build_and_push_image
@@ -24,7 +25,7 @@ build_and_push_image:
         - docker push "$CI_REGISTRY_IMAGE"
     only:
         - master
-        
+
 production:
     type: deploy
     stage: production
@@ -36,4 +37,3 @@ production:
         - dpl --provider=heroku --app=frontend-erp-money --api-key=ea8eaee0-d532-4799-952f-ae3ee05a456c
     only:
         - master
-
